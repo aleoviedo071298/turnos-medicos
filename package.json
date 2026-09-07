@@ -1,0 +1,28 @@
+{
+  "name": "turnos-medicos",
+  "version": "1.0.0",
+  "description": "Backend de gestion de turnos medicos - TurnosMed",
+  "type": "module",
+  "main": "dist/index.js",
+  "scripts": {
+    "build": "tsc",
+    "start": "node dist/index.js",
+    "dev": "node --watch src/index.ts"
+  },
+  "keywords": [
+    "nodejs",
+    "express",
+    "typescript",
+    "turnos-medicos"
+  ],
+  "author": "Alejandro Oviedo",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^5.2.1"
+  },
+  "devDependencies": {
+    "@types/express": "^5.0.6",
+    "@types/node": "^26.4.1",
+    "typescript": "^7.0.2"
+  }
+}

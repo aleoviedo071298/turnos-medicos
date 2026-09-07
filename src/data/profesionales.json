@@ -1,0 +1,206 @@
+[
+  {
+    "medicoId": "fc33e546-61a2-4394-a050-a2fb00fd81db",
+    "nombre": "Laura Giménez",
+    "especialidad": "Cardiología",
+    "activo": true
+  },
+  {
+    "medicoId": "533c2c36-3b96-402a-8093-69e9816596f3",
+    "nombre": "Martín Aguirre",
+    "especialidad": "Cardiología",
+    "activo": true
+  },
+  {
+    "medicoId": "f229a246-c294-4271-b685-db6bb65693e8",
+    "nombre": "Sofía Benítez",
+    "especialidad": "Dermatología",
+    "activo": true
+  },
+  {
+    "medicoId": "21e11826-8968-4612-acf4-f306686c5dd2",
+    "nombre": "Diego Ramírez",
+    "especialidad": "Dermatología",
+    "activo": true
+  },
+  {
+    "medicoId": "c0281316-a13f-43a2-8771-d8133f633a0b",
+    "nombre": "Valentina Sosa",
+    "especialidad": "Pediatría",
+    "activo": true
+  },
+  {
+    "medicoId": "c23591e6-ed52-4caa-83eb-262257e14331",
+    "nombre": "Nicolás Ferreyra",
+    "especialidad": "Pediatría",
+    "activo": true
+  },
+  {
+    "medicoId": "a3263962-f637-4dc3-9f1e-4ff9b3c5f197",
+    "nombre": "Camila Rodríguez",
+    "especialidad": "Pediatría",
+    "activo": true
+  },
+  {
+    "medicoId": "f0da4a29-feee-4bf0-bb67-9ed0f65dc63c",
+    "nombre": "Javier Domínguez",
+    "especialidad": "Traumatología",
+    "activo": true
+  },
+  {
+    "medicoId": "28eddf5d-0c0b-4c5a-81b3-bc2a95f67230",
+    "nombre": "Lucía Peralta",
+    "especialidad": "Traumatología",
+    "activo": true
+  },
+  {
+    "medicoId": "e158bf00-287d-4a74-a8d4-369e68460655",
+    "nombre": "Mariana Ibarra",
+    "especialidad": "Ginecología",
+    "activo": true
+  },
+  {
+    "medicoId": "da250454-a6d2-4eba-afe2-6dfad86470f1",
+    "nombre": "Florencia Acosta",
+    "especialidad": "Ginecología",
+    "activo": true
+  },
+  {
+    "medicoId": "6bc45213-083c-438e-9cf4-002509499780",
+    "nombre": "Federico Molina",
+    "especialidad": "Neurología",
+    "activo": true
+  },
+  {
+    "medicoId": "5db7a456-e2c1-4efe-ada0-f0ceafa94a49",
+    "nombre": "Agustina Vera",
+    "especialidad": "Neurología",
+    "activo": false
+  },
+  {
+    "medicoId": "7d9c1696-0cd1-4ae4-92c2-7b094a6f98cf",
+    "nombre": "Ricardo Núñez",
+    "especialidad": "Oftalmología",
+    "activo": true
+  },
+  {
+    "medicoId": "28b78eb4-71df-4fa9-9591-a6e6ae403fa0",
+    "nombre": "Paula Cabrera",
+    "especialidad": "Oftalmología",
+    "activo": true
+  },
+  {
+    "medicoId": "c106ae97-90ee-4e4f-986d-af10154bf0e4",
+    "nombre": "Gonzalo Herrera",
+    "especialidad": "Otorrinolaringología",
+    "activo": true
+  },
+  {
+    "medicoId": "73a0e99c-97b3-4279-8a45-5cc7406ce1f8",
+    "nombre": "Silvina Ledesma",
+    "especialidad": "Endocrinología",
+    "activo": true
+  },
+  {
+    "medicoId": "24b6a818-36ac-4586-90a4-6d90291691f5",
+    "nombre": "Emiliano Ojeda",
+    "especialidad": "Gastroenterología",
+    "activo": true
+  },
+  {
+    "medicoId": "81b32318-9b4f-42f0-9917-8b37575a9eb0",
+    "nombre": "Natalia Cáceres",
+    "especialidad": "Gastroenterología",
+    "activo": true
+  },
+  {
+    "medicoId": "e6d82ec7-f89b-4f2f-81d1-4c0260452077",
+    "nombre": "Hernán Quiroga",
+    "especialidad": "Urología",
+    "activo": true
+  },
+  {
+    "medicoId": "196a0f8c-213f-4344-a583-3d1974e9c6eb",
+    "nombre": "Carolina Maidana",
+    "especialidad": "Neumonología",
+    "activo": true
+  },
+  {
+    "medicoId": "923bf20d-e2b2-4cdf-b9b6-2ecb61de5235",
+    "nombre": "Sebastián Luna",
+    "especialidad": "Neumonología",
+    "activo": false
+  },
+  {
+    "medicoId": "bda077d4-bcf2-4f99-a9d5-ff354780ac9b",
+    "nombre": "Verónica Ponce",
+    "especialidad": "Reumatología",
+    "activo": true
+  },
+  {
+    "medicoId": "215f2f4b-f352-4c8c-859b-bd184d24cf8c",
+    "nombre": "Matías Escobar",
+    "especialidad": "Psiquiatría",
+    "activo": true
+  },
+  {
+    "medicoId": "c32ba176-397f-4518-9b47-2d6914470894",
+    "nombre": "Ana Villalba",
+    "especialidad": "Psiquiatría",
+    "activo": true
+  },
+  {
+    "medicoId": "f663d9af-7933-455f-9593-0375af4ea405",
+    "nombre": "Leandro Bustos",
+    "especialidad": "Nefrología",
+    "activo": true
+  },
+  {
+    "medicoId": "c43b33d1-4881-4a28-ab08-6615af3c33e2",
+    "nombre": "Julieta Ríos",
+    "especialidad": "Oncología",
+    "activo": true
+  },
+  {
+    "medicoId": "9e918bb1-f47d-486f-af61-1a724718bc2a",
+    "nombre": "Pablo Andrada",
+    "especialidad": "Hematología",
+    "activo": true
+  },
+  {
+    "medicoId": "b2fccf8d-c43e-495e-a77b-31543f368eae",
+    "nombre": "Rocío Miranda",
+    "especialidad": "Alergia e Inmunología",
+    "activo": true
+  },
+  {
+    "medicoId": "4916d730-1b98-46f1-b764-7d029e59b484",
+    "nombre": "Esteban Coronel",
+    "especialidad": "Clínica Médica",
+    "activo": true
+  },
+  {
+    "medicoId": "812739f1-7ce7-4d1a-8abc-11d54a5ad8bf",
+    "nombre": "Gabriela Farías",
+    "especialidad": "Clínica Médica",
+    "activo": true
+  },
+  {
+    "medicoId": "551a0225-4cb8-4a63-a6ef-d66bafbebf42",
+    "nombre": "Alejandro Ávila",
+    "especialidad": "Cirugía General",
+    "activo": true
+  },
+  {
+    "medicoId": "f94b37ea-39bb-491f-a077-804e42c7f642",
+    "nombre": "Micaela Godoy",
+    "especialidad": "Cirugía General",
+    "activo": true
+  },
+  {
+    "medicoId": "bd58cace-53d7-4c65-b2bf-e133fcbef9e4",
+    "nombre": "Tomás Barrios",
+    "especialidad": "Infectología",
+    "activo": true
+  }
+]

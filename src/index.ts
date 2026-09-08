@@ -22,16 +22,17 @@ app.get('/especialidades', (req: Request, res: Response) => {
         res.status(200)
             .json({success: true, data: arrayEspecialidades})
     } catch (error) {
-        res.status(400)
-            .json({success: false, message: 'Error al intentar obtener el listado de especialidades'})
+        res.status(500)
+            .json({success: false, message: 'Error interno del servidor'})
     }
 })
 //Especialidad segun su especialidadId
 app.get('/especialidades/:id', (req: Request, res: Response) => {
     try {
-        const especialidadId: number | undefined = Number(req.params.id)
-        if (!especialidadId) {
-            throw new Error('El id de la especialidad debe ser un número')
+        const especialidadId: number = Number(req.params.id)
+        if (Number.isNaN(especialidadId)) {
+            return res.status(400)
+                .json({success: false, message: 'El id de la especialidad debe ser un número'})
         }
         const especialidadSolicitada = arrayEspecialidades.find((esp: any) => esp.especialidadId === especialidadId)
         if (!especialidadSolicitada) {
@@ -54,12 +55,14 @@ app.post('/especialidades', (req: Request, res: Response) => {
         const { nombreEspecialidad, activa } = req.body
 
         if (!nombreEspecialidad || typeof nombreEspecialidad !== 'string') {
-            throw new Error('El campo nombreEspecialidad es obligatorio')
+            return res.status(400)
+                .json({success: false, message: 'El campo nombreEspecialidad es obligatorio'})
         }
 
         const duplicada = arrayEspecialidades.some((esp: any) => esp.nombreEspecialidad === nombreEspecialidad)
         if (duplicada) {
-            throw new Error('Ya existe una especialidad con ese nombre')
+            return res.status(400)
+                .json({success: false, message: 'Ya existe una especialidad con ese nombre'})
         }
 
         const nuevaEspecialidad: Especialidad = {
@@ -73,14 +76,18 @@ app.post('/especialidades', (req: Request, res: Response) => {
         res.status(201)
             .json({success: true, data: nuevaEspecialidad})
     } catch (error) {
-        res.status(400)
-            .json({success: false, message: (error as Error).message})
+        res.status(500)
+            .json({success: false, message: 'Error interno del servidor'})
     }
 })
 //Borrado logico de una especialidad
 app.delete('/especialidades/:id', (req: Request, res: Response) => {
     try {
         const especialidadId: number = Number(req.params.id)
+        if (Number.isNaN(especialidadId)) {
+            return res.status(400)
+                .json({success: false, message: 'El id de la especialidad debe ser un número'})
+        }
         const indice: number = arrayEspecialidades.findIndex((esp: any) => esp.especialidadId === especialidadId)
         if (indice > -1) {
             arrayEspecialidades[indice].activa = false
@@ -106,26 +113,31 @@ app.get('/profesionales', (req: Request, res: Response) => {
         res.status(200)
             .json({success: true, data: profesionalesFiltrados})
     } catch (error) {
-        res.status(400)
-            .json({success: false, message: 'Verifica el codigo de especialidad enviado'})
+        res.status(500)
+            .json({success: false, message: 'Error interno del servidor'})
     }
 })
 //Profesional segun su medicoId
 app.get('/profesionales/:id', (req: Request, res: Response) => {
     try {
-        const profesionalId = req.params.id
-        const profesionalSeleccionado = arrayProfesionales.find((prof: any) => prof.medicoId === Number(profesionalId))
+        const profesionalId: number = Number(req.params.id)
+        if (Number.isNaN(profesionalId)) {
+            return res.status(400)
+                .json({success: false, message: 'El id del profesional debe ser un número'})
+        }
+        const profesionalSeleccionado = arrayProfesionales.find((prof: any) => prof.medicoId === profesionalId)
         if (profesionalSeleccionado) {
             console.clear()
             console.table(profesionalSeleccionado)
             res.status(200)
                 .json({success: true, data: profesionalSeleccionado})
         } else {
-            throw new Error('No existe un profesional con ese id')
+            res.status(404)
+                .json({success: false, message: 'No existe un profesional con ese id'})
         }
     } catch (error) {
-        res.status(404)
-            .json({success: false, message: (error as Error).message})
+        res.status(500)
+            .json({success: false, message: 'Error interno del servidor'})
     }
 })
 //Alta de un nuevo profesional
@@ -134,12 +146,14 @@ app.post('/profesionales', (req: Request, res: Response) => {
         const { nombre, especialidad, activo } = req.body
 
         if (!nombre || typeof nombre !== 'string') {
-            throw new Error('El campo nombre es obligatorio')
+            return res.status(400)
+                .json({success: false, message: 'El campo nombre es obligatorio'})
         }
 
         const especialidadExistente = arrayEspecialidades.find((esp: any) => esp.nombreEspecialidad === especialidad)
         if (!especialidadExistente) {
-            throw new Error('La especialidad indicada no existe en el listado')
+            return res.status(400)
+                .json({success: false, message: 'La especialidad indicada no existe en el listado'})
         }
 
         const nuevoProfesional: Profesional = {
@@ -154,16 +168,20 @@ app.post('/profesionales', (req: Request, res: Response) => {
         res.status(201)
             .json({success: true, data: nuevoProfesional})
     } catch (error) {
-        res.status(400)
-            .json({success: false, message: (error as Error).message})
+        res.status(500)
+            .json({success: false, message: 'Error interno del servidor'})
     }
 })
 //Modificacion completa de un profesional
 app.put('/profesionales/:id', (req: Request, res: Response) => {
     try {
-        const profesionalId = req.params.id
+        const profesionalId: number = Number(req.params.id)
+        if (Number.isNaN(profesionalId)) {
+            return res.status(400)
+                .json({success: false, message: 'El id del profesional debe ser un número'})
+        }
         const { nombre, especialidad, activo } = req.body
-        const indice = arrayProfesionales.findIndex((prof: any) => prof.medicoId === Number(profesionalId))
+        const indice = arrayProfesionales.findIndex((prof: any) => prof.medicoId === profesionalId)
         if (indice > -1) {
             arrayProfesionales[indice].nombre = nombre
             arrayProfesionales[indice].especialidad = especialidad
@@ -177,15 +195,19 @@ app.put('/profesionales/:id', (req: Request, res: Response) => {
                 .json({success: false, message: 'No existe un profesional con ese id'})
         }
     } catch (error) {
-        res.status(400)
-            .json({success: false, message: (error as Error).message})
+        res.status(500)
+            .json({success: false, message: 'Error interno del servidor'})
     }
 })
 //Borrado logico de un profesional
 app.delete('/profesionales/:id', (req: Request, res: Response) => {
     try {
-        const profesionalId = req.params.id
-        const indice = arrayProfesionales.findIndex((prof: any) => prof.medicoId === Number(profesionalId))
+        const profesionalId: number = Number(req.params.id)
+        if (Number.isNaN(profesionalId)) {
+            return res.status(400)
+                .json({success: false, message: 'El id del profesional debe ser un número'})
+        }
+        const indice = arrayProfesionales.findIndex((prof: any) => prof.medicoId === profesionalId)
         if (indice > -1) {
             arrayProfesionales[indice].activo = false
             console.clear()
@@ -197,8 +219,8 @@ app.delete('/profesionales/:id', (req: Request, res: Response) => {
                 .json({success: false, message: 'No existe un profesional con ese id'})
         }
     } catch (error) {
-        res.status(400)
-            .json({success: false, message: (error as Error).message})
+        res.status(500)
+            .json({success: false, message: 'Error interno del servidor'})
     }
 })
 //Endpoint general

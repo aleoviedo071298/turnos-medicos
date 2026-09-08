@@ -67,20 +67,20 @@ Base: `http://localhost:3000`
 
 | Método | Ruta | Descripción | Éxito | Errores |
 | --- | --- | --- | --- | --- |
-| GET | `/especialidades` | Listado completo | 200 | 400 |
-| GET | `/especialidades/:id` | Busca por `especialidadId` | 200 | 404, 500 |
-| POST | `/especialidades` | Alta de especialidad | 201 | 400 |
-| DELETE | `/especialidades/:id` | Borrado lógico (`activa` → `false`) | 204 | 404, 500 |
+| GET | `/especialidades` | Listado completo | 200 | 500 |
+| GET | `/especialidades/:id` | Busca por `especialidadId` | 200 | 400, 404, 500 |
+| POST | `/especialidades` | Alta de especialidad | 201 | 400, 500 |
+| DELETE | `/especialidades/:id` | Borrado lógico (`activa` → `false`) | 204 | 400, 404, 500 |
 
 ### Profesionales
 
 | Método | Ruta | Descripción | Éxito | Errores |
 | --- | --- | --- | --- | --- |
-| GET | `/profesionales` | Listado de profesionales activos | 200 | 400 |
-| GET | `/profesionales/:id` | Busca por `medicoId` | 200 | 404 |
-| POST | `/profesionales` | Alta, validando que la especialidad exista | 201 | 400 |
-| PUT | `/profesionales/:id` | Modificación completa | 200 | 400, 404 |
-| DELETE | `/profesionales/:id` | Borrado lógico (`activo` → `false`) | 204 | 404 |
+| GET | `/profesionales` | Listado de profesionales activos | 200 | 500 |
+| GET | `/profesionales/:id` | Busca por `medicoId` | 200 | 400, 404, 500 |
+| POST | `/profesionales` | Alta, validando que la especialidad exista | 201 | 400, 500 |
+| PUT | `/profesionales/:id` | Modificación completa | 200 | 400, 404, 500 |
+| DELETE | `/profesionales/:id` | Borrado lógico (`activo` → `false`) | 204 | 400, 404, 500 |
 
 ### Cuerpos de las peticiones
 
@@ -140,7 +140,7 @@ Un middleware final, registrado después de todas las rutas, captura cualquier p
 - `200 OK` en lecturas y modificaciones exitosas.
 - `201 Created` en las altas.
 - `204 No Content` en los borrados lógicos.
-- `400 Bad Request` ante un cuerpo inválido o una especialidad inexistente.
+- `400 Bad Request` ante un cuerpo inválido, un id no numérico o una especialidad inexistente.
 - `404 Not Found` ante un id que no existe o una ruta no contemplada.
 - `500 Internal Server Error` ante una falla inesperada.
 

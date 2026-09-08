@@ -1,111 +1,111 @@
 [
   {
-    "especialidadId": "5a218ca2-55fb-4cd3-85b2-a752b6314ff1",
+    "especialidadId": 1,
     "nombreEspecialidad": "Cardiología",
     "activa": true
   },
   {
-    "especialidadId": "1d01328b-3349-4c0e-91ba-378927b707d4",
+    "especialidadId": 2,
     "nombreEspecialidad": "Dermatología",
     "activa": true
   },
   {
-    "especialidadId": "9d780f1a-286c-45b5-92cc-3913f8454815",
+    "especialidadId": 3,
     "nombreEspecialidad": "Pediatría",
     "activa": true
   },
   {
-    "especialidadId": "fc18d729-78f4-4e18-9ba4-18ef3e00251e",
+    "especialidadId": 4,
     "nombreEspecialidad": "Traumatología",
     "activa": true
   },
   {
-    "especialidadId": "9b16366a-06b2-4abd-97fc-f976d37ac057",
+    "especialidadId": 5,
     "nombreEspecialidad": "Ginecología",
     "activa": true
   },
   {
-    "especialidadId": "92f6b725-1c92-4ec1-8b36-4252aad5d833",
+    "especialidadId": 6,
     "nombreEspecialidad": "Neurología",
     "activa": true
   },
   {
-    "especialidadId": "b08769cd-96a8-4443-aab4-0ec0607dd65b",
+    "especialidadId": 7,
     "nombreEspecialidad": "Oftalmología",
     "activa": true
   },
   {
-    "especialidadId": "df494d78-8f4a-4f4d-82cc-c69508a289a0",
+    "especialidadId": 8,
     "nombreEspecialidad": "Otorrinolaringología",
     "activa": true
   },
   {
-    "especialidadId": "1173ea22-2eed-4333-b2c3-651c4857c233",
+    "especialidadId": 9,
     "nombreEspecialidad": "Endocrinología",
     "activa": true
   },
   {
-    "especialidadId": "8df51648-7ce0-4c5b-818e-387e6b40a073",
+    "especialidadId": 10,
     "nombreEspecialidad": "Gastroenterología",
     "activa": true
   },
   {
-    "especialidadId": "943e8b5a-3b26-4e9c-8d7f-7e1a6a27663b",
+    "especialidadId": 11,
     "nombreEspecialidad": "Urología",
     "activa": true
   },
   {
-    "especialidadId": "4f088272-ea6e-481e-ad2c-60776fcd8a0c",
+    "especialidadId": 12,
     "nombreEspecialidad": "Neumonología",
     "activa": true
   },
   {
-    "especialidadId": "448e49d4-b648-4462-8d5b-0746fe876ee4",
+    "especialidadId": 13,
     "nombreEspecialidad": "Reumatología",
     "activa": true
   },
   {
-    "especialidadId": "aefd5839-360b-49a8-a224-f07f916154c6",
+    "especialidadId": 14,
     "nombreEspecialidad": "Psiquiatría",
     "activa": true
   },
   {
-    "especialidadId": "2c73b988-c441-40cd-a7fc-fd9ae8706f31",
+    "especialidadId": 15,
     "nombreEspecialidad": "Nefrología",
     "activa": true
   },
   {
-    "especialidadId": "9b5b0793-52d5-4b9f-97df-1749e6ff6c22",
+    "especialidadId": 16,
     "nombreEspecialidad": "Oncología",
     "activa": true
   },
   {
-    "especialidadId": "6e0a73ee-b807-4d35-8a45-86673aa5dc74",
+    "especialidadId": 17,
     "nombreEspecialidad": "Hematología",
     "activa": true
   },
   {
-    "especialidadId": "040a4a55-9b70-40a8-9501-0677612d9c94",
+    "especialidadId": 18,
     "nombreEspecialidad": "Alergia e Inmunología",
     "activa": true
   },
   {
-    "especialidadId": "9f9d6cee-6c02-49be-8a80-cd96e0aaca95",
+    "especialidadId": 19,
     "nombreEspecialidad": "Clínica Médica",
     "activa": true
   },
   {
-    "especialidadId": "67266164-0912-4fe7-a496-c26811910888",
+    "especialidadId": 20,
     "nombreEspecialidad": "Cirugía General",
     "activa": true
   },
   {
-    "especialidadId": "39dfdb3c-02b6-4e1f-b27c-b855e2f55e49",
+    "especialidadId": 21,
     "nombreEspecialidad": "Infectología",
     "activa": true
   },
   {
-    "especialidadId": "1cfd8047-883b-4322-9616-6e56618e5dbb",
+    "especialidadId": 22,
     "nombreEspecialidad": "Medicina Deportiva",
     "activa": false
   }

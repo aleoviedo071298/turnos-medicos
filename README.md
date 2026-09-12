@@ -6,7 +6,7 @@
 ![TypeScript](https://img.shields.io/badge/TypeScript-3178C6?style=for-the-badge&logo=typescript&logoColor=white)
 ![Express](https://img.shields.io/badge/Express-000000?style=for-the-badge&logo=express&logoColor=white)
 
-> Actividades 1 y 2 — Integraciones Web, Módulos 1 y 2. UNER — Tecnicatura Universitaria en Desarrollo Web.
+> Actividades 1 y 2 — Integraciones Web, Módulos 1 y 2. Teclab — Tecnicatura Superior en Programación.
 
 ## Contexto
 

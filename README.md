@@ -105,6 +105,14 @@ static findById = async (req: Request, res: Response) => {
 
 Base: `http://localhost:3000`
 
+### General
+
+| Método | Ruta | Descripción | Éxito |
+|---|---|---|---|
+| GET | `/` | Mensaje de bienvenida del servidor | 200 |
+
+Cualquier ruta o método no contemplado cae en el middleware final de `GeneralController.notFound`, que responde 404 en JSON.
+
 ### Especialidades
 
 | Método | Ruta | Descripción | Éxito | Errores |

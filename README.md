@@ -6,7 +6,7 @@
 ![TypeScript](https://img.shields.io/badge/TypeScript-3178C6?style=for-the-badge&logo=typescript&logoColor=white)
 ![Express](https://img.shields.io/badge/Express-000000?style=for-the-badge&logo=express&logoColor=white)
 
-> Actividades 1 y 2 — Integraciones Web, Módulos 1 y 2. Teclab — Tecnicatura Superior en Programación.
+> Actividades 1, 2 y 3 — Integraciones Web, Módulos 1, 2 y 3. Teclab — Tecnicatura Superior en Programación.
 
 ## Contexto
 
@@ -52,15 +52,53 @@ El servidor queda escuchando en `http://localhost:3000`.
 ```
 turnos-medicos/
 ├── src/
+│   ├── controller/
+│   │   ├── general.controller.ts          Hello world y middleware de rutas inexistentes
+│   │   ├── especialidades.controller.ts   Handlers de la entidad Especialidades
+│   │   └── profesionales.controller.ts    Handlers de la entidad Profesionales
 │   ├── data/
 │   │   ├── especialidades.json
 │   │   └── profesionales.json
-│   ├── index.ts          Servidor Express: rutas, controllers y middleware
+│   ├── index.ts          Servidor Express: registro de rutas y middlewares
 │   └── resources.ts      Carga de JSON, tipos de dominio y parametría de agenda
 ├── .gitignore
 ├── package.json
 ├── tsconfig.json
 └── README.md
+```
+
+### Arquitectura
+
+La definición de las rutas está desacoplada de la lógica de negocio. `index.ts` solo registra cada ruta contra el método del controlador que le corresponde:
+
+```ts
+app.get('/especialidades', EspecialidadesController.getAll)
+app.get('/especialidades/:id', EspecialidadesController.findById)
+```
+
+Cada controlador es una clase con métodos estáticos asincrónicos. Todos siguen el mismo patrón:
+
+- Una variable de estado `statusCode` propia del controlador, que se ajusta según el camino que tome el flujo.
+- Validaciones previas a cualquier lectura o modificación de datos, que lanzan `throw new Error(...)` tras fijar el código correspondiente.
+- La lógica envuelta en `try-catch`, con el `catch` devolviendo el mensaje del error y el código ya configurado.
+- `return` explícito en cada respuesta, para evitar el error *headers already sent*.
+
+```ts
+static findById = async (req: Request, res: Response) => {
+    this.statusCode = 200
+    try {
+        const especialidadId: number = Number(req.params.id)
+        if (Number.isNaN(especialidadId)) {
+            this.statusCode = 400
+            throw new Error('El id de la especialidad debe ser un número')
+        }
+        // ...
+    } catch (error: any) {
+        if (this.statusCode < 400) this.statusCode = 400
+        return res.status(this.statusCode)
+            .json({success: false, message: error.message})
+    }
+}
 ```
 
 ## API REST
@@ -71,20 +109,20 @@ Base: `http://localhost:3000`
 
 | Método | Ruta | Descripción | Éxito | Errores |
 |---|---|---|---|---|
-| GET | `/especialidades` | Listado completo | 200 | 500 |
-| GET | `/especialidades/:id` | Busca por `especialidadId` | 200 | 400, 404, 500 |
-| POST | `/especialidades` | Alta de especialidad | 201 | 400, 500 |
-| DELETE | `/especialidades/:id` | Borrado lógico (`activa → false`) | 204 | 400, 404, 500 |
+| GET | `/especialidades` | Listado de especialidades activas | 200 | 400 |
+| GET | `/especialidades/:id` | Busca por `especialidadId` | 200 | 400, 404 |
+| POST | `/especialidades` | Alta de especialidad | 201 | 400 |
+| DELETE | `/especialidades/:id` | Borrado lógico (`activa → false`) | 204 | 400, 404 |
 
 ### Profesionales
 
 | Método | Ruta | Descripción | Éxito | Errores |
 |---|---|---|---|---|
-| GET | `/profesionales` | Listado de profesionales activos | 200 | 500 |
-| GET | `/profesionales/:id` | Busca por `medicoId` | 200 | 400, 404, 500 |
-| POST | `/profesionales` | Alta, validando que la especialidad exista | 201 | 400, 500 |
-| PUT | `/profesionales/:id` | Modificación completa | 200 | 400, 404, 500 |
-| DELETE | `/profesionales/:id` | Borrado lógico (`activo → false`) | 204 | 400, 404, 500 |
+| GET | `/profesionales` | Listado de profesionales activos | 200 | 400 |
+| GET | `/profesionales/:id` | Busca por `medicoId` | 200 | 400, 404 |
+| POST | `/profesionales` | Alta, validando que la especialidad exista | 201 | 400 |
+| PUT | `/profesionales/:id` | Modificación completa | 200 | 400, 404 |
+| DELETE | `/profesionales/:id` | Borrado lógico (`activo → false`) | 204 | 400, 404 |
 
 ### Cuerpos de las peticiones
 

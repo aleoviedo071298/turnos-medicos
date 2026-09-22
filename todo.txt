@@ -1,10 +1,23 @@
-Lista de tareas:
- [x] declarar todas las funciones de endpoints como asincrónicas
- [x] agregar return en cada response
- [x] validar bloques try-catch en cada función de endpoint
- [x] controlar errores usando throw new Error()
- [x] variable de código de estado global 'statusCode'
- [x] modificar los endpoints de cada Entidad integrando cada función en un controlador de Entidades.
- [x] Pruebas con POSTMAN
-    [x] pruebas efectivas
-    [x] pruebas forzadas al error
+LISTA DE TAREAS
+ [x] crear modelos JSON de pacientes
+ [x] crear modelos JSON de turnos
+ [x] contemplar la interface de parametria que armamos oportunamente
+ [x] definir los endpoints de pacientes
+ [x] definir los endpoints de turnos
+
+POSTMAN
+ [x] crear variable de entorno en la colección correspondiente a TurnosMed
+ [x] asignarle como valor, la URL de pruebas de nuestro proyecto
+ [x] modificar todos los endpoints para que usen la URL
+ [x] Realizar las pruebas de funcionamiento de la variable
+
+DOCUMENTACION
+ [x] crear el archivo pacientes-turnos.md
+ [x] actualizar este archivo con la explicación de las estructuras de datos pacientes, turnos, estado de turnos, y endpoints
+ [x] en el archivo README.md
+     [x] Agregar el apartado final donde debemos
+         [x] Descargar el proyecto del repositorio
+         [x] inicializarlo para instalar las dependencias (con la salvedad de sudo)
+         [x] comando para poner el proyecto en ejecución en ambiente dev
+         [x] comando para transpilar el proyecto
+         [x] comando para poner el proyecto en ejecución en ambiente producción

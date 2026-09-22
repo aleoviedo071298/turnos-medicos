@@ -6,13 +6,15 @@
 ![TypeScript](https://img.shields.io/badge/TypeScript-3178C6?style=for-the-badge&logo=typescript&logoColor=white)
 ![Express](https://img.shields.io/badge/Express-000000?style=for-the-badge&logo=express&logoColor=white)
 
-> Actividades 1, 2 y 3 — Integraciones Web, Módulos 1, 2 y 3. Teclab — Tecnicatura Superior en Programación.
+> Actividades 1, 2, 3 y 4 — Integraciones Web, Módulos 1, 2, 3 y 4. Teclab — Tecnicatura Superior en Programación.
 
 ## Contexto
 
 Todos los profesionales del centro atienden de **lunes a viernes**, entre las **07:00** y las **13:00**, en turnos de **30 minutos**.
 
 Los datos se cargan desde archivos JSON al iniciar el servidor y viven en arrays en memoria. Toda alta, baja o modificación persiste únicamente mientras el proceso esté corriendo: al reiniciar, los arrays vuelven al contenido de los JSON.
+
+La propuesta del próximo módulo, con el modelado de **Pacientes** y **Turnos** y sus endpoints, está documentada en [`pacientes-turnos.md`](./pacientes-turnos.md).
 
 ## Tech Stack
 
@@ -22,30 +24,6 @@ Los datos se cargan desde archivos JSON al iniciar el servidor y viven en arrays
 | **Lenguaje** | TypeScript |
 | **Framework** | Express.js |
 | **Datos** | `node:fs/promises` — JSON en memoria |
-
-## Requisitos previos
-
-- Node.js 24 LTS o superior
-- npm 11 o superior
-
-## Instalación y ejecución
-
-```bash
-git clone https://github.com/aleoviedo071298/turnos-medicos.git
-cd turnos-medicos
-npm install
-npm run dev
-```
-
-El servidor queda escuchando en `http://localhost:3000`.
-
-## Scripts
-
-| Script | Descripción |
-|---|---|
-| `npm run dev` | Modo desarrollo con recarga automática |
-| `npm run build` | Compila TypeScript a `dist/` |
-| `npm start` | Ejecuta el proyecto compilado |
 
 ## Estructura del proyecto
 
@@ -58,12 +36,16 @@ turnos-medicos/
 │   │   └── profesionales.controller.ts    Handlers de la entidad Profesionales
 │   ├── data/
 │   │   ├── especialidades.json
-│   │   └── profesionales.json
+│   │   ├── profesionales.json
+│   │   ├── pacientes.json                 Mockup del próximo módulo
+│   │   ├── turnos.json                    Mockup del próximo módulo
+│   │   └── estadosdeturnos.json           Catálogo de estados de turno
 │   ├── index.ts          Servidor Express: registro de rutas y middlewares
 │   └── resources.ts      Carga de JSON, tipos de dominio y parametría de agenda
 ├── .gitignore
 ├── package.json
 ├── tsconfig.json
+├── pacientes-turnos.md
 └── README.md
 ```
 
@@ -101,72 +83,76 @@ static findById = async (req: Request, res: Response) => {
 }
 ```
 
+---
+
 ## API REST
 
-Base: `http://localhost:3000`
+**Base URL:** `http://localhost:3000`
 
-### General
+### Resumen de endpoints
 
-| Método | Ruta | Descripción | Éxito |
-|---|---|---|---|
-| GET | `/` | Mensaje de bienvenida del servidor | 200 |
+| Método | Path | Descripción funcional |
+|---|---|---|
+| GET | `/` | Mensaje de bienvenida del servidor |
+| GET | `/especialidades` | Listado de especialidades activas |
+| GET | `/especialidades/:id` | Recupera una especialidad por su identificador |
+| POST | `/especialidades` | Registra una nueva especialidad |
+| DELETE | `/especialidades/:id` | Baja lógica de una especialidad |
+| GET | `/profesionales` | Listado de profesionales activos |
+| GET | `/profesionales/:id` | Recupera un profesional por su identificador |
+| POST | `/profesionales` | Registra un nuevo profesional |
+| PUT | `/profesionales/:id` | Modificación completa de un profesional |
+| DELETE | `/profesionales/:id` | Baja lógica de un profesional |
 
-Cualquier ruta o método no contemplado cae en el middleware final de `GeneralController.notFound`, que responde 404 en JSON.
+### Convenciones
 
-### Especialidades
+Toda respuesta exitosa con contenido devuelve:
 
-| Método | Ruta | Descripción | Éxito | Errores |
-|---|---|---|---|---|
-| GET | `/especialidades` | Listado de especialidades activas | 200 | 400 |
-| GET | `/especialidades/:id` | Busca por `especialidadId` | 200 | 400, 404 |
-| POST | `/especialidades` | Alta de especialidad | 201 | 400 |
-| DELETE | `/especialidades/:id` | Borrado lógico (`activa → false`) | 204 | 400, 404 |
-
-### Profesionales
-
-| Método | Ruta | Descripción | Éxito | Errores |
-|---|---|---|---|---|
-| GET | `/profesionales` | Listado de profesionales activos | 200 | 400 |
-| GET | `/profesionales/:id` | Busca por `medicoId` | 200 | 400, 404 |
-| POST | `/profesionales` | Alta, validando que la especialidad exista | 201 | 400 |
-| PUT | `/profesionales/:id` | Modificación completa | 200 | 400, 404 |
-| DELETE | `/profesionales/:id` | Borrado lógico (`activo → false`) | 204 | 400, 404 |
-
-### Cuerpos de las peticiones
-
-`POST /especialidades`
-```json
-{
-  "nombreEspecialidad": "Kinesiología",
-  "activa": true
-}
-```
-
-`POST /profesionales` y `PUT /profesionales/:id`
-```json
-{
-  "nombre": "Ana Gutiérrez",
-  "especialidad": "Cardiología",
-  "activo": true
-}
-```
-
-### Formato de respuestas
-
-Éxito:
 ```json
 { "success": true, "data": {} }
 ```
 
-Error:
+Toda respuesta de error devuelve:
+
 ```json
 { "success": false, "message": "Descripción del problema" }
 ```
 
-Las respuestas `204` no llevan cuerpo.
+Las respuestas `204 No Content` no llevan cuerpo. Las peticiones con cuerpo requieren la cabecera `Content-Type: application/json`.
 
-### Rutas inexistentes
+Esta versión de la API **no utiliza query params**: los identificadores viajan siempre como parámetros de ruta y los datos de alta o modificación en el cuerpo de la petición.
 
+| Código | Cuándo se devuelve |
+|---|---|
+| `200 OK` | Lectura o modificación exitosa |
+| `201 Created` | Alta exitosa |
+| `204 No Content` | Baja lógica exitosa, sin cuerpo de respuesta |
+| `400 Bad Request` | Cuerpo inválido, identificador no numérico o regla de negocio incumplida |
+| `404 Not Found` | El identificador no corresponde a ningún registro, o la ruta no existe |
+
+---
+
+### General
+
+#### `GET /`
+
+Mensaje de bienvenida que confirma que el servidor está levantado y respondiendo.
+
+**Parámetros:** ninguno. **Cuerpo:** no requiere.
+
+**`200 OK`**
+```json
+{
+  "success": true,
+  "message": "Bienvenidos al servidor web de MedTurnos"
+}
+```
+
+#### Rutas y métodos no contemplados
+
+Cualquier petición dirigida a un path inexistente, o con un verbo HTTP no previsto sobre un path existente, es capturada por el middleware final `GeneralController.notFound`.
+
+**`404 Not Found`**
 ```json
 {
   "success": false,
@@ -175,6 +161,266 @@ Las respuestas `204` no llevan cuerpo.
   "metodo": "GET"
 }
 ```
+
+---
+
+### Especialidades
+
+#### `GET /especialidades`
+
+Devuelve el listado de especialidades cuyo campo `activa` es `true`.
+
+**Parámetros:** ninguno. **Cuerpo:** no requiere.
+
+**`200 OK`**
+```json
+{
+  "success": true,
+  "data": [
+    {
+      "especialidadId": 1,
+      "nombreEspecialidad": "Cardiología",
+      "activa": true
+    }
+  ]
+}
+```
+
+| Error | Código | Mensaje |
+|---|---|---|
+| Falla inesperada | `400` | Mensaje del error capturado |
+
+#### `GET /especialidades/:id`
+
+Recupera una especialidad puntual a partir de su identificador.
+
+| Parámetro | Ubicación | Tipo | Obligatorio | Descripción |
+|---|---|---|---|---|
+| `id` | Ruta | `number` | Sí | Valor de `especialidadId` a buscar |
+
+**Cuerpo:** no requiere.
+
+**`200 OK`**
+```json
+{
+  "success": true,
+  "data": {
+    "especialidadId": 1,
+    "nombreEspecialidad": "Cardiología",
+    "activa": true
+  }
+}
+```
+
+| Error | Código | Mensaje |
+|---|---|---|
+| Identificador no numérico | `400` | `El id de la especialidad debe ser un número` |
+| Identificador inexistente | `404` | `No existe una especialidad con ese id` |
+
+#### `POST /especialidades`
+
+Registra una nueva especialidad. El `especialidadId` se genera del lado del servidor.
+
+**Parámetros de ruta:** ninguno.
+
+| Campo del cuerpo | Tipo | Obligatorio | Descripción |
+|---|---|---|---|
+| `nombreEspecialidad` | `string` | Sí | Nombre de la especialidad |
+| `activa` | `boolean` | No | Estado inicial. Se interpreta como `false` si se omite |
+
+```json
+{
+  "nombreEspecialidad": "Kinesiología",
+  "activa": true
+}
+```
+
+**`201 Created`**
+```json
+{
+  "success": true,
+  "data": {
+    "especialidadId": 23,
+    "nombreEspecialidad": "Kinesiología",
+    "activa": true
+  }
+}
+```
+
+| Error | Código | Mensaje |
+|---|---|---|
+| Falta el nombre o no es texto | `400` | `El campo nombreEspecialidad es obligatorio` |
+
+#### `DELETE /especialidades/:id`
+
+Aplica la baja lógica de una especialidad: el registro permanece en el array y solo se marca `activa` en `false`.
+
+| Parámetro | Ubicación | Tipo | Obligatorio | Descripción |
+|---|---|---|---|---|
+| `id` | Ruta | `number` | Sí | Valor de `especialidadId` a dar de baja |
+
+**Cuerpo:** no requiere.
+
+**`204 No Content`** — sin cuerpo de respuesta.
+
+| Error | Código | Mensaje |
+|---|---|---|
+| Identificador no numérico | `400` | `El id de la especialidad debe ser un número` |
+| Identificador inexistente | `404` | `No existe una especialidad con ese id` |
+
+---
+
+### Profesionales
+
+#### `GET /profesionales`
+
+Devuelve el listado de profesionales cuyo campo `activo` es `true`.
+
+**Parámetros:** ninguno. **Cuerpo:** no requiere.
+
+**`200 OK`**
+```json
+{
+  "success": true,
+  "data": [
+    {
+      "medicoId": 1,
+      "nombre": "Laura Giménez",
+      "especialidad": "Cardiología",
+      "activo": true
+    }
+  ]
+}
+```
+
+| Error | Código | Mensaje |
+|---|---|---|
+| Falla inesperada | `400` | Mensaje del error capturado |
+
+#### `GET /profesionales/:id`
+
+Recupera un profesional puntual a partir de su identificador.
+
+| Parámetro | Ubicación | Tipo | Obligatorio | Descripción |
+|---|---|---|---|---|
+| `id` | Ruta | `number` | Sí | Valor de `medicoId` a buscar |
+
+**Cuerpo:** no requiere.
+
+**`200 OK`**
+```json
+{
+  "success": true,
+  "data": {
+    "medicoId": 1,
+    "nombre": "Laura Giménez",
+    "especialidad": "Cardiología",
+    "activo": true
+  }
+}
+```
+
+| Error | Código | Mensaje |
+|---|---|---|
+| Identificador no numérico | `400` | `El id del profesional debe ser un número` |
+| Identificador inexistente | `404` | `No existe un profesional con ese id` |
+
+#### `POST /profesionales`
+
+Registra un nuevo profesional, validando que la especialidad asignada exista en el listado de especialidades. El `medicoId` se genera del lado del servidor.
+
+**Parámetros de ruta:** ninguno.
+
+| Campo del cuerpo | Tipo | Obligatorio | Descripción |
+|---|---|---|---|
+| `nombre` | `string` | Sí | Nombre y apellido del profesional |
+| `especialidad` | `string` | Sí | Debe coincidir con un `nombreEspecialidad` existente |
+| `activo` | `boolean` | No | Estado inicial. Se interpreta como `false` si se omite |
+
+```json
+{
+  "nombre": "Ana Gutiérrez",
+  "especialidad": "Cardiología",
+  "activo": true
+}
+```
+
+**`201 Created`**
+```json
+{
+  "success": true,
+  "data": {
+    "medicoId": 35,
+    "nombre": "Ana Gutiérrez",
+    "especialidad": "Cardiología",
+    "activo": true
+  }
+}
+```
+
+| Error | Código | Mensaje |
+|---|---|---|
+| Falta el nombre o no es texto | `400` | `El campo nombre es obligatorio` |
+| La especialidad no existe | `400` | `La especialidad ingresada no existe` |
+
+#### `PUT /profesionales/:id`
+
+Modificación completa de un profesional existente. El `medicoId` no es modificable: se toma del parámetro de ruta.
+
+| Parámetro | Ubicación | Tipo | Obligatorio | Descripción |
+|---|---|---|---|---|
+| `id` | Ruta | `number` | Sí | Valor de `medicoId` a modificar |
+
+| Campo del cuerpo | Tipo | Obligatorio | Descripción |
+|---|---|---|---|
+| `nombre` | `string` | Sí | Nuevo nombre del profesional |
+| `especialidad` | `string` | Sí | Nueva especialidad asignada |
+| `activo` | `boolean` | Sí | Nuevo estado del profesional |
+
+```json
+{
+  "nombre": "Ana Gutiérrez Actualizada",
+  "especialidad": "Pediatría",
+  "activo": true
+}
+```
+
+**`200 OK`**
+```json
+{
+  "success": true,
+  "data": {
+    "medicoId": 1,
+    "nombre": "Ana Gutiérrez Actualizada",
+    "especialidad": "Pediatría",
+    "activo": true
+  }
+}
+```
+
+| Error | Código | Mensaje |
+|---|---|---|
+| Identificador no numérico | `400` | `El id del profesional debe ser un número` |
+| Identificador inexistente | `404` | `No existe un profesional con ese id` |
+
+#### `DELETE /profesionales/:id`
+
+Aplica la baja lógica de un profesional: el registro permanece en el array y solo se marca `activo` en `false`.
+
+| Parámetro | Ubicación | Tipo | Obligatorio | Descripción |
+|---|---|---|---|---|
+| `id` | Ruta | `number` | Sí | Valor de `medicoId` a dar de baja |
+
+**Cuerpo:** no requiere.
+
+**`204 No Content`** — sin cuerpo de respuesta.
+
+| Error | Código | Mensaje |
+|---|---|---|
+| Identificador no numérico | `400` | `El id del profesional debe ser un número` |
+| Identificador inexistente | `404` | `No existe un profesional con ese id` |
+
+---
 
 ## Configuración de la agenda
 
@@ -193,6 +439,71 @@ export const configuracionAgenda: Parametria = {
   horaMaxima: '13:00'
 }
 ```
+
+---
+
+## Instalación y ejecución
+
+### Requisitos previos
+
+- Node.js 24 LTS o superior
+- npm 11 o superior
+
+Para verificar las versiones instaladas:
+
+```bash
+node -v
+npm -v
+```
+
+### 1. Descargar el proyecto del repositorio
+
+```bash
+git clone https://github.com/aleoviedo071298/turnos-medicos.git
+cd turnos-medicos
+```
+
+### 2. Instalar las dependencias
+
+```bash
+npm install
+```
+
+El comando lee `package.json` y crea la carpeta `node_modules/`, que está excluida del repositorio por el `.gitignore`.
+
+> **Sobre `sudo`:** en Linux o macOS no hace falta anteponer `sudo` a `npm install`. Las dependencias se instalan dentro del directorio del proyecto, no a nivel del sistema. Ejecutarlo como superusuario deja los archivos de `node_modules/` con propietario `root` y después genera errores de permisos al trabajar con el usuario habitual. Reservá `sudo` para las instalaciones globales con la bandera `-g`.
+
+### 3. Ejecutar en ambiente de desarrollo
+
+```bash
+npm run dev
+```
+
+Levanta el servidor con `node --watch src/index.ts`, que ejecuta TypeScript directamente y reinicia el proceso ante cada cambio guardado. El servidor queda escuchando en `http://localhost:3000`.
+
+### 4. Transpilar el proyecto
+
+```bash
+npm run build
+```
+
+Ejecuta `tsc`, que verifica los tipos y genera el JavaScript compilado dentro de la carpeta `dist/`, también excluida del repositorio.
+
+### 5. Ejecutar en ambiente de producción
+
+```bash
+npm start
+```
+
+Ejecuta `node dist/index.js`, es decir, el código ya transpilado. Requiere haber corrido `npm run build` previamente.
+
+### Resumen de scripts
+
+| Script | Comando subyacente | Ambiente |
+|---|---|---|
+| `npm run dev` | `node --watch src/index.ts` | Desarrollo |
+| `npm run build` | `tsc` | Transpilación |
+| `npm start` | `node dist/index.js` | Producción |
 
 ---
 

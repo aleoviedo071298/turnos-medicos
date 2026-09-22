@@ -1,0 +1,9 @@
+{
+  "codigo_paciente": "PAC-2026-001",
+  "nombre_completo": "María Elena Gómez",
+  "documento_identificador": "38450912",
+  "fecha_nacimiento": "1994-06-15",
+  "email": "maria.gomez@example.com",
+  "telefono": "+541155554321",
+  "cobertura_salud": "OSDE 310"
+}

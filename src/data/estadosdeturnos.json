@@ -1,0 +1,39 @@
+{
+  "estados_disponibles": [
+    {
+      "codigo": "registrado",
+      "nombre": "Registrado",
+      "descripcion": "El turno fue solicitado y agendado correctamente."
+    },
+    {
+      "codigo": "validado",
+      "nombre": "Validado",
+      "descripcion": "La cobertura de salud o los datos del turno fueron confirmados."
+    },
+    {
+      "codigo": "presente",
+      "nombre": "Presente",
+      "descripcion": "El paciente ha llegado al establecimiento."
+    },
+    {
+      "codigo": "en_consulta",
+      "nombre": "En Consulta",
+      "descripcion": "El paciente está siendo atendido por el profesional."
+    },
+    {
+      "codigo": "finalizado",
+      "nombre": "Finalizado",
+      "descripcion": "La consulta concluyó y el turno se cerró correctamente."
+    },
+    {
+      "codigo": "cancelado",
+      "nombre": "Cancelado",
+      "descripcion": "El turno fue dado de baja por el paciente o por el establecimiento."
+    },
+    {
+      "codigo": "no_presentado",
+      "nombre": "No Presentado",
+      "descripcion": "El paciente no asistió al turno y no avisó con antelación."
+    }
+  ]
+}
